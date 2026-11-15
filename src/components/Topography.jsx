@@ -1289,13 +1289,21 @@ const Topography = ({
     };
 
     let sizedDpr = settingsRef.current.dpr;
+    // Adaptive resolution: when frames keep missing their budget (heavy load or
+    // a GPU that has heated up and throttled), render at a lower resolution.
+    let dprScale = 1;
+    let slowFrames = 0;
+    let sampledFrames = 0;
+    // Stop the ambient animation after a while without user input; it resumes on the next move.
+    const IDLE_MS = 20000;
+    let lastInput = performance.now();
 
     const resize = () => {
       const s = settingsRef.current;
       sizedDpr = s.dpr;
       view.width = Math.max(1, container.clientWidth);
       view.height = Math.max(1, container.clientHeight);
-      view.ratio = Math.min(s.dpr || window.devicePixelRatio || 1, 2);
+      view.ratio = Math.max(0.35, Math.min(s.dpr || window.devicePixelRatio || 1, 2) * dprScale);
       canvas.width = Math.max(1, Math.round(view.width * view.ratio));
       canvas.height = Math.max(1, Math.round(view.height * view.ratio));
       render();
@@ -1309,6 +1317,20 @@ const Topography = ({
       if (ready && lastDraw && now - lastDraw < 1000 / settingsRef.current.maxFps) {
         raf = requestAnimationFrame(frame);
         return;
+      }
+      if (ready && lastDraw) {
+        const gap = now - lastDraw;
+        if (gap < 250) {
+          sampledFrames++;
+          if (gap > 1.6 * (1000 / settingsRef.current.maxFps)) slowFrames++;
+          if (sampledFrames >= 48) {
+            if (slowFrames / sampledFrames > 0.35 && dprScale > 0.5) {
+              dprScale = Math.max(0.5, dprScale * 0.8);
+              resize();
+            }
+            sampledFrames = slowFrames = 0;
+          }
+        }
       }
       lastDraw = now;
       if (!ready) {
@@ -1429,15 +1451,16 @@ const Topography = ({
         Math.abs(state.pitchVelocity) > 1e-4 ||
         Math.abs(focusTarget - state.focus) > 1e-3 ||
         Math.abs(tracing - state.trace) > 1e-3;
+      const idle = now - lastInput > IDLE_MS;
       const busy =
-        (!reduce && (s.speed !== 0 || s.morph !== 0 || s.glitch > 0 || s.markers >= 0)) ||
+        (!reduce && !idle && (s.speed !== 0|| s.morph !== 0 || s.glitch > 0 || s.markers >= 0)) ||
         state.intro < 1 ||
         pulses.length > 0 ||
         sculpting ||
         settling ||
         (state.presence > 0.001 && state.presence < 0.999);
       quiet = busy ? 0 : quiet + dt;
-      if (quiet < 0.5) raf = requestAnimationFrame(frame);
+      if (quiet < (idle ? 0 : 0.5)) raf = requestAnimationFrame(frame);
     };
 
     function wake() {
@@ -1458,6 +1481,7 @@ const Topography = ({
     const onPointerMove = event => {
       const { x, y, inside } = locate(event);
       const was = pointer.inside;
+      lastInput = performance.now();
       pointer.inside = inside;
       if (inside) {
         pointer.x = x;

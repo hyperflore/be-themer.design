@@ -5,7 +5,7 @@ import { LOW_SPEC } from "../lowEnd";
 
 const QUALITY = LOW_SPEC
   ? { lineCount: 8, dpr: 0.5, maxFps: 12 }
-  : { lineCount: 18, dpr: 1.5, maxFps: 31 };
+  : { lineCount: 14, dpr: 1, maxFps: 24 };
 
 const STOPS = ["#e11d48", "#8b5cf6", "#9aa0ac"];
 const CYCLE = 36;
