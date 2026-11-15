@@ -2,8 +2,7 @@ node_modules/
 dist/
 *.local
 
-public/music/
-*.mp3
+/*.mp3
 
 component file
 kotha pfps/
