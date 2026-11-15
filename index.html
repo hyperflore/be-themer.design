@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="theme-color" content="#e11d48" />
+    <title>Be Themer: Just a better customizing option.</title>
+    <meta name="description" content="Be Themer restyles Discord live and adds 56 optional plugins: media widgets, a browser, a screen recorder and more. Free and open source for Windows." />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Be Themer" />
+    <meta property="og:title" content="Be Themer: Just a better customizing option." />
+    <meta property="og:description" content="Restyle Discord live and add the plugins you want. Free for Windows." />
+    <meta property="og:url" content="%SITE_URL%/" />
+    <meta property="og:image" content="%SITE_URL%/og.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Be Themer" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Be Themer: Just a better customizing option." />
+    <meta name="twitter:description" content="Restyle Discord live and add the plugins you want. Free for Windows." />
+    <meta name="twitter:image" content="%SITE_URL%/og.jpg" />
+    <script>
+      try {
+        const t = localStorage.getItem("theme");
+        if (t === "light") document.documentElement.classList.remove("dark");
+      } catch {}
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

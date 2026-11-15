@@ -1,0 +1,5 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "rewrites": [{ "source": "/((?!assets/|models/|avatars/|covers/|emojis/|servers/|stickers/|wallpapers/|music/).*)", "destination": "/index.html" }]
+}

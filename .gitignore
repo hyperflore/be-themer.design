@@ -1,0 +1,17 @@
+node_modules/
+dist/
+*.local
+
+public/music/
+*.mp3
+
+component file
+kotha pfps/
+pfp offline/
+slide pfp/
+server icons/
+liquid_wallpaper_4k.png
+
+Tame Impala, JENNIE - Dracula (JENNIE Remix).json
+
+tsconfig.tsbuildinfo
