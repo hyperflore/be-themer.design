@@ -2,7 +2,6 @@ import { createContext, useContext, useEffect, useRef, useState, type ReactNode 
 import { AnimatePresence, motion } from "motion/react";
 import { Music2, Pause, Volume2, VolumeX } from "lucide-react";
 
-const LOCAL = "/music/dracula-jennie.mp3";
 const PREVIEW = "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/71/5d/31/715d3169-5fba-a0b7-da24-2aefc83796cf/mzaf_8089500935177582820.plus.aac.p.m4a";
 
 type Music = { start: () => void; toggle: () => void; playing: boolean; bass: () => number; time: () => number; seek: (t: number) => void };
@@ -60,8 +59,8 @@ export function MusicProvider({ children }: { children: ReactNode }) {
   return (
     <Ctx.Provider value={{ start, toggle, playing, bass, time: () => audio.current?.currentTime ?? 0, seek: t => { const a = audio.current; if (a) { a.currentTime = t; if (a.paused) start(); } } }}>
       {children}
-      <audio ref={audio} src={LOCAL} loop preload="none" crossOrigin="anonymous"
-        onError={e => { const a = e.currentTarget; if (!a.src.includes("itunes")) { a.src = PREVIEW; if (shown) a.play().catch(() => {}); } }} onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)} />
+      <audio ref={audio} src={PREVIEW} loop preload="none" crossOrigin="anonymous"
+        onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)} />
 
       <AnimatePresence>
         {shown && (
