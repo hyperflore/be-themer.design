@@ -8,7 +8,7 @@ export const DL = {
 };
 export const DISCORD = "https://discord.gg/PG5ZFGCw4";
 export const EMAIL = "bethemer.contact@gmail.com";
-export const VERSION = "2.2.0";
+export const VERSION = "2.2.2";
 
 export const FUNC_REPO = "https://github.com/hyperflore/Be-Func";
 export const STYLER_REPO = "https://github.com/hyperflore/Be-Styler";
@@ -50,9 +50,9 @@ export const BUILDS = [
     repo: CORE_REPO,
     installer: "Be-Core.exe",
     cli: "Be-Core-Cli.exe",
-    summary: "The smallest build: just Fake Nitro, DMS Saaf, Meow and Owlie.",
-    includes: ["4 plugins: Fake Nitro, DMS Saaf, Meow and Owlie", "No theme and no other plugins", "No splash screen and no custom CSS"],
-    pick: "You only want those four, and the lightest install.",
+    summary: "The smallest build: just Fake Nitro, DMS Saaf, Meow, Owlie and Message Logger.",
+    includes: ["5 plugins: Fake Nitro, DMS Saaf, Meow, Owlie and Message Logger", "No theme and no other plugins", "No splash screen and no custom CSS"],
+    pick: "You only want those five, and the lightest install.",
   },
 ] as const;
 
@@ -60,7 +60,7 @@ export const BUILD_PAGES: Record<string, string> = { func: "/func", styler: "/st
 
 export const THEME_PLUGIN_NAMES = ["Cursor Pet", "Sakura Petals", "Screen Effects", "Small Fixes", "Macmize", "Username Tools", "Compact Server List", "Loading Quotes"];
 
-export const CORE_PLUGIN_NAMES = ["Fake Nitro", "DMS Saaf", "Meow", "Owlie"];
+export const CORE_PLUGIN_NAMES = ["Fake Nitro", "DMS Saaf", "Meow", "Owlie", "Message Logger"];
 
 export const CMD = {
   powershell: "irm https://raw.githubusercontent.com/hyperflore/Be-Themer/main/install.ps1 | iex",
